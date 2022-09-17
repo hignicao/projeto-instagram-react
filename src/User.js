@@ -1,11 +1,11 @@
-export default function User() {
+export default function User(props) {
 	return (
 		<div class="user">
-			<img src="assets/img/catanacomics.svg" alt="User" />
+			<img src={props.usrImg} alt="User" />
 			<div class="text">
-				<strong>catanacomics</strong>
+				<strong>{props.usrName}</strong>
 				<span>
-					Catana
+					{props.name}
 					<ion-icon name="create-outline"></ion-icon>
 				</span>
 			</div>
