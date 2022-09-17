@@ -1,4 +1,20 @@
+import React from "react";
+
 function Post(props) {
+	const [savePost, setSavePost] = React.useState(false);
+	const [like, setLike] = React.useState(false);
+	const [likeCount, setLikeCount] = React.useState(props.likedCount);
+
+	function dislikePost() {
+		setLike(false);
+		setLikeCount(likeCount - 1);
+	}
+
+	function likePost() {
+		setLike(true);
+		setLikeCount(likeCount + 1);
+	}
+
 	return (
 		<div class="post">
 			<div class="top">
@@ -12,25 +28,23 @@ function Post(props) {
 			</div>
 
 			<div class="content">
-				<img src={props.pstImg} alt="post" />
+				<img onDoubleClick={likePost} src={props.pstImg} alt="post" />
 			</div>
 
 			<div class="background">
 				<div class="actions">
 					<div>
-						<ion-icon name="heart-outline"></ion-icon>
+						{like ? <ion-icon onClick={dislikePost} class="red" name="heart"></ion-icon> : <ion-icon onClick={likePost} name="heart-outline"></ion-icon>}
 						<ion-icon name="chatbubble-outline"></ion-icon>
 						<ion-icon name="paper-plane-outline"></ion-icon>
 					</div>
-					<div>
-						<ion-icon name="bookmark-outline"></ion-icon>
-					</div>
+					<div>{savePost ? <ion-icon onClick={() => setSavePost(false)} name="bookmark"></ion-icon> : <ion-icon onClick={() => setSavePost(true)} name="bookmark-outline"></ion-icon>}</div>
 				</div>
 
 				<div class="likes">
 					<img src={props.likedByImg} alt="liked by" />
 					<div class="text">
-						Curtido por <strong>{props.likedBy}</strong> e <strong>outras {props.likedCount} pessoas</strong>
+						Curtido por <strong>{props.likedBy}</strong> e <strong>outras {likeCount.toLocaleString('pt-BR')} pessoas</strong>
 					</div>
 				</div>
 			</div>
